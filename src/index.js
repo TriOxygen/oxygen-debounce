@@ -18,13 +18,22 @@ export default function debounce(func, wait = 100, immediate) {
     if (callNow) {
       func.apply(context, args);
     }
+
+    this.clear = () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    }
+
+    this.trigger = () => {
+      if (timeout) {
+        clearTimeout();
+        func.apply(context, args);
+      }
+    };
+
   };
 
-  debounced.clear = () => {
-    if (timeout) {
-      clearTimeout(timeout);
-    }
-  }
 
   return debounced;
 };
